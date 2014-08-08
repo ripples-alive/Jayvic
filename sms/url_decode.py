@@ -10,7 +10,7 @@ def url_decode(query_string):
         return {}
 
     from urllib import unquote
-    query_string = unquote(query_string)
+    query_string = unquote(query_string.replace('+', ' '))
 
     query_dict = {}
     query_list = query_string.split('&')
