@@ -4,6 +4,7 @@ __author__ = 'Jayvic'
 __date__ = '14-8-8'
 
 import ConfigParser
+import json
 
 from url_decode import url_decode
 from message_factory import MessageFactory
@@ -41,4 +42,9 @@ def sms_app(environ, start_response):
         msg_cls_type = 'Short Fetion'
 
     sms_sender = MessageFactory.create_message(msg_cls_type, url_para['from'], url_para['pswd'])
-    return sms_sender.send(url_para['msg'], url_para['to'])
+
+    status = '200 OK'
+    response_headers = [('Content-type', 'application/json;charset=utf-8')]
+    start_response(status, response_headers)
+
+    return [json.dumps(sms_sender.send(url_para['msg'], url_para['to']))]
