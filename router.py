@@ -5,14 +5,16 @@ __date__ = '14-8-2'
 
 
 def router_middleware(environ, start_response):
+    """A simple router middleware."""
     path = environ['PATH_INFO']
-    if path == '/SMS':
+    if path.lower() == '/sms':
         from sms.sms_app import sms_app
         return sms_app(environ, start_response)
     elif path == '/':
         return static_app(environ, start_response, './index.html')
     else:
-        return static_app(environ, start_response)
+        # Forbid illegal request.
+        return static_app(environ, start_response, './404.html')
 
 
 def static_app(environ, start_response, path=None):

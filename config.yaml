@@ -1,12 +1,5 @@
 name: hangman
 version: 1
-accesskey: wljox21112
-
-cron:
-    - description: Sustain dictionary cron
-      url: sustain_dict
-      schedule: every 5 mins
-      timezone: Beijing
 
 handlers:
     - url: /static/
