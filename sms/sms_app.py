@@ -31,6 +31,8 @@ def sms_app(environ, start_response):
     # If receiver's mobile phone number is not set, send to the sender as default.
     if 'to' not in url_para:
         url_para['to'] = url_para['from']
+    else:
+        url_para['to'] = url_para['to'].split(',')
 
     config = ConfigParser.ConfigParser()
     try:
