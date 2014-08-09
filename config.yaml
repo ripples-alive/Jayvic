@@ -4,6 +4,3 @@ version: 1
 handlers:
     - url: /static/
       static_path: static
-
-    - url: /index.html
-      static_path: index.html

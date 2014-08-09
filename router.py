@@ -6,11 +6,17 @@ __date__ = '14-8-2'
 
 def router_middleware(environ, start_response):
     """A simple router middleware."""
-    path = environ['PATH_INFO']
-    if path.lower() == '/sms':
+    host = environ['HTTP_HOST'].lower()
+    path = environ['PATH_INFO'].lower()
+    if host == 'sms.jayvic.sinaapp.com' and path == '/':
         from sms.sms_app import sms_app
         return sms_app(environ, start_response)
-    elif path == '/':
+    if host == 'blog.jayvic.sinaapp.com':
+        status = '301 Moved Permanently'
+        response_headers = [('Location', 'http://GeekJayvic.sinaapp.com' + path)]
+        start_response(status, response_headers)
+        return []
+    elif path == '/' or path == '/index.html':
         return static_app(environ, start_response, './index.html')
     else:
         # Forbid illegal request.
