@@ -22,14 +22,18 @@ def sms_app(environ, start_response):
     except Exception, error:
         print(error)
 
+    # If there is no parameter, return the test page of the interface.
+    if not url_para:
+        start_response('200 OK', [('Content-type', 'charset=utf-8')])
+        return open('./sms.html')
     # Check whether the parameters are legal.
     if 'from' not in url_para or 'pswd' not in url_para or 'msg' not in url_para:
         status = '200 OK'
         response_headers = [('Content-type', 'application/json;charset=utf-8')]
         start_response(status, response_headers)
-        return ['{"sendCode":"-1","info":"参数错误！"}']
+        return [json.dumps({"sendCode": -1, "info": u"参数错误！"})]
     # If receiver's mobile phone number is not set, send to the sender as default.
-    if 'to' not in url_para:
+    if 'to' not in url_para or url_para['to'] == '':
         url_para['to'] = url_para['from']
     else:
         url_para['to'] = url_para['to'].split(',')

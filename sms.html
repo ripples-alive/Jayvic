@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        *
+        {
+            margin: 10px auto;
+        }
+        form
+        {
+            width: 250px;
+            text-align: center;
+        }
+        label
+        {
+            width: 110px;
+            display: inline-block;
+            text-align: left;
+        }
+        input
+        {
+            width: 110px;
+        }
+        input#submit
+        {
+            width: 50px;
+        }
+    </style>
+    <script type="text/javascript">
+        function send()
+        {
+            var send_form = document.forms[0];
+            var send_str = '';
+            for (var i = 0; i < send_form.length; ++i) {
+                if (send_str != '') {
+                    send_str += '&';
+                }
+                send_str += send_form[i].name + '=' + send_form[i].value;
+            }
+            var xml_http = new XMLHttpRequest();
+            xml_http.open("POST", "/", false);
+            xml_http.send(send_str);
+            alert(xml_http.responseText);
+            return false;
+        }
+    </script>
+</head>
+<body>
+<form method="post" onsubmit="return send()">
+    <h3>飞信接口测试平台</h3>
+    <label for="from">发送方手机号:</label>
+    <input id="from" name="from" />
+    <br />
+    <label for="pswd">发 送 方 密 码:</label>
+    <input id="pswd" type="password" name="pswd" />
+    <br />
+    <label for="to">接收方手机号:</label>
+    <input id="to" name="to" />
+    <br />
+    <label for="msg">发 &nbsp;&nbsp;送 &nbsp;内 &nbsp;&nbsp;容:</label>
+    <input id="msg" name="msg" />
+    <br />
+    <input id="submit" type="submit" name="submit" value="发  送" />
+</form>
+</body>
+</html>
